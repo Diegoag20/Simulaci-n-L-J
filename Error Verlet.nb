@@ -1,0 +1,295 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 13.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     10183,        285]
+NotebookOptionsPosition[      9662,        267]
+NotebookOutlinePosition[     10099,        284]
+CellTagsIndexPosition[     10056,        281]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{
+   "Par\[AAcute]metros", " ", "de", " ", "la", " ", "simulaci\[OAcute]n"}], 
+   "*)"}], 
+  RowBox[{
+   RowBox[{
+    RowBox[{"tmax", "=", "10"}], ";"}], " ", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Tiempo", " ", "m\[AAcute]ximo", " ", "de", " ", "simulaci\[OAcute]n"}], 
+    "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"dt", "=", "1"}], ";"}], " ", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"Paso", " ", "de", " ", "tiempo"}], ",", 
+     RowBox[{"para", " ", "simplificar"}]}], "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"tiempos", "=", 
+     RowBox[{"Range", "[", 
+      RowBox[{"1", ",", "tmax", ",", "dt"}], "]"}]}], ";"}], " ", 
+   RowBox[{"(*", 
+    RowBox[{"Lista", " ", "de", " ", "tiempos", " ", "discretos"}], "*)"}], 
+   "\n", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"Posici\[OAcute]n", " ", "te\[OAcute]rica"}], ",", 
+     RowBox[{
+     "que", " ", "en", " ", "este", " ", "caso", " ", "es", " ", "solo", " ", 
+      "un", " ", "valor", " ", "arbitrario"}]}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"posicionTeorica", "[", "t_", "]"}], ":=", "t"}], "  ", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Suponemos", " ", "que", " ", "la", " ", "posici\[OAcute]n", " ", "es", 
+     " ", "lineal", " ", "con", " ", "el", " ", "tiempo"}], "*)"}], "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Calcular", " ", "los", " ", "errores", " ", "acumulados", " ", "en", " ",
+      "cada", " ", "paso", " ", "n"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"errores", "=", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"tiempos", "*", 
+        RowBox[{"(", 
+         RowBox[{"tiempos", "+", "1"}], ")"}]}], ")"}], "/", "2"}]}], ";"}], 
+   "\n", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Generar", " ", "las", " ", "posiciones", " ", "con", " ", "barras", " ", 
+     "de", " ", "error", " ", "acumulado"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"datosConError", "=", 
+     RowBox[{"Transpose", "[", 
+      RowBox[{"{", 
+       RowBox[{"tiempos", ",", 
+        RowBox[{"posicionTeorica", "/@", "tiempos"}], ",", "errores"}], "}"}],
+       "]"}]}], ";"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Graficar", " ", "las", " ", "posiciones", " ", "con", " ", "barras", " ",
+      "de", " ", "error", " ", "acumulado"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"ListPlot", "[", 
+    RowBox[{
+     RowBox[{"datosConError", "[", 
+      RowBox[{"[", 
+       RowBox[{"All", ",", 
+        RowBox[{"{", 
+         RowBox[{"1", ",", "2"}], "}"}]}], "]"}], "]"}], ",", 
+     RowBox[{"PlotRange", "->", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"0", ",", "tmax"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", "20"}], "}"}]}], "}"}]}], ",", 
+     RowBox[{"(*", 
+      RowBox[{
+      "Limitar", " ", "el", " ", "rango", " ", "de", " ", "la", " ", 
+       "gr\[AAcute]fica", " ", "para", " ", "alejarla"}], "*)"}], 
+     RowBox[{"PlotStyle", "->", "Blue"}], ",", 
+     RowBox[{"PlotMarkers", "->", 
+      RowBox[{"{", 
+       RowBox[{"Automatic", ",", "12"}], "}"}]}], ",", 
+     RowBox[{
+     "PlotLabel", "->", 
+      "\"\<Error acumulado por el algortimo de Verlet\>\""}], ",", 
+     RowBox[{"AxesLabel", "->", 
+      RowBox[{"{", 
+       RowBox[{"\"\<Tiempo\>\"", ",", "\"\<Posici\[OAcute]n\>\""}], "}"}]}], 
+     ",", 
+     RowBox[{"Epilog", "->", 
+      RowBox[{"{", 
+       RowBox[{"(*", 
+        RowBox[{
+        "Agregar", " ", "barras", " ", "de", " ", "error", " ", "verticales", 
+         " ", "para", " ", "cada", " ", "punto", " ", "con", " ", "un", " ", 
+         "factor", " ", "de", " ", "reducci\[OAcute]n"}], "*)"}], 
+       RowBox[{"Table", "[", 
+        RowBox[{
+         RowBox[{"Line", "[", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"tiempos", "[", 
+               RowBox[{"[", "i", "]"}], "]"}], ",", 
+              RowBox[{
+               RowBox[{"posicionTeorica", "[", 
+                RowBox[{"tiempos", "[", 
+                 RowBox[{"[", "i", "]"}], "]"}], "]"}], "-", 
+               RowBox[{
+                RowBox[{"errores", "[", 
+                 RowBox[{"[", "i", "]"}], "]"}], "/", "10"}]}]}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"tiempos", "[", 
+               RowBox[{"[", "i", "]"}], "]"}], ",", 
+              RowBox[{
+               RowBox[{"posicionTeorica", "[", 
+                RowBox[{"tiempos", "[", 
+                 RowBox[{"[", "i", "]"}], "]"}], "]"}], "+", 
+               RowBox[{
+                RowBox[{"errores", "[", 
+                 RowBox[{"[", "i", "]"}], "]"}], "/", "10"}]}]}], "}"}]}], 
+           "}"}], "]"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"i", ",", 
+           RowBox[{"Length", "[", "tiempos", "]"}]}], "}"}]}], "]"}], "}"}]}],
+      ",", 
+     RowBox[{"PlotTheme", "->", "\"\<Detailed\>\""}]}], "]"}], "\n", "\n", 
+   "\n", "\n", "\n", "\n", "\n", "\n", "\n"}]}]], "Input",
+ CellChangeTimes->{{3.940374406817883*^9, 3.940374406817883*^9}, {
+  3.9403744902771673`*^9, 3.9403744911235948`*^9}, {3.940374546910107*^9, 
+  3.940374547458684*^9}, {3.940374589067441*^9, 3.9403745901909657`*^9}, {
+  3.940374671708684*^9, 3.940374672378852*^9}, {3.94037474257321*^9, 
+  3.940374743340535*^9}, {3.9403751909180174`*^9, 3.9403751914962435`*^9}, {
+  3.9403752473514585`*^9, 3.940375247855985*^9}, {3.9403753667059927`*^9, 
+  3.9403753673158517`*^9}, {3.940375438979266*^9, 3.940375504840765*^9}},
+ CellLabel->
+  "In[144]:=",ExpressionUUID->"3240b2d2-6177-4e5c-9cf0-70cd72c56c9b"],
+
+Cell[BoxData[
+ GraphicsBox[{{}, 
+   {RGBColor[0, 0, 1], PointSize[0.012833333333333334`], AbsoluteThickness[
+    1.6], GeometricTransformationBox[InsetBox[
+      FormBox[
+       StyleBox[
+        GraphicsBox[
+         {EdgeForm[None], DiskBox[{0, 0}]}],
+        StripOnInput->False,
+        GraphicsBoxOptions->{DefaultBaseStyle->Directive[
+          PointSize[0.012833333333333334`], 
+          AbsoluteThickness[1.6], 
+          RGBColor[0, 0, 1]]}],
+       TraditionalForm], {0., 0.}, Automatic, Offset[12]], {{{1., 1.}}, {{2., 
+     2.}}, {{3., 3.}}, {{4., 4.}}, {{5., 5.}}, {{6., 6.}}, {{7., 7.}}, {{8., 
+     8.}}, {{9., 9.}}, {{10., 10.}}}]}, {{}, {}}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->{False, False},
+  AxesLabel->{
+    FormBox[
+     TagBox["\"Tiempo\"", HoldForm], TraditionalForm], 
+    FormBox[
+     TagBox["\"Posici\[OAcute]n\"", HoldForm], TraditionalForm]},
+  AxesOrigin->{0, 0},
+  DisplayFunction->Identity,
+  Epilog->{{
+     LineBox[
+      NCache[{{1, 
+         Rational[9, 10]}, {1, 
+         Rational[11, 10]}}, {{1, 0.9}, {1, 1.1}}]], 
+     LineBox[
+      NCache[{{2, 
+         Rational[17, 10]}, {2, 
+         Rational[23, 10]}}, {{2, 1.7}, {2, 2.3}}]], 
+     LineBox[
+      NCache[{{3, 
+         Rational[12, 5]}, {3, 
+         Rational[18, 5]}}, {{3, 2.4}, {3, 3.6}}]], 
+     LineBox[{{4, 3}, {4, 5}}], 
+     LineBox[
+      NCache[{{5, 
+         Rational[7, 2]}, {5, 
+         Rational[13, 2]}}, {{5, 3.5}, {5, 6.5}}]], 
+     LineBox[
+      NCache[{{6, 
+         Rational[39, 10]}, {6, 
+         Rational[81, 10]}}, {{6, 3.9}, {6, 8.1}}]], 
+     LineBox[
+      NCache[{{7, 
+         Rational[21, 5]}, {7, 
+         Rational[49, 5]}}, {{7, 4.2}, {7, 9.8}}]], 
+     LineBox[
+      NCache[{{8, 
+         Rational[22, 5]}, {8, 
+         Rational[58, 5]}}, {{8, 4.4}, {8, 11.6}}]], 
+     LineBox[
+      NCache[{{9, 
+         Rational[9, 2]}, {9, 
+         Rational[27, 2]}}, {{9, 4.5}, {9, 13.5}}]], 
+     LineBox[
+      NCache[{{10, 
+         Rational[9, 2]}, {10, 
+         Rational[31, 2]}}, {{10, 4.5}, {10, 15.5}}]]}},
+  Frame->{{True, True}, {True, True}},
+  FrameLabel->{{None, None}, {None, None}},
+  FrameStyle->Automatic,
+  FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+  GridLines->{Automatic, Automatic},
+  GridLinesStyle->Directive[
+    GrayLevel[0.4, 0.5], 
+    AbsoluteThickness[1], 
+    AbsoluteDashing[{1, 2}]],
+  Method->{
+   "OptimizePlotMarkers" -> True, "OptimizePlotMarkers" -> True, 
+    "CoordinatesToolOptions" -> {"DisplayFunction" -> ({
+        Identity[
+         Part[#, 1]], 
+        Identity[
+         Part[#, 2]]}& ), "CopiedValueFunction" -> ({
+        Identity[
+         Part[#, 1]], 
+        Identity[
+         Part[#, 2]]}& )}},
+  PlotLabel->FormBox[
+   "\"Error acumulado por el algortimo de Verlet\"", TraditionalForm],
+  PlotRange->{{0., 10.}, {0., 20.}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{0, 0}, {0, 0}},
+  Ticks->{Automatic, Automatic}]], "Output",
+ CellChangeTimes->{
+  3.9403744210536823`*^9, 3.9403744950867605`*^9, 3.9403745492594056`*^9, 
+   3.9403745917079353`*^9, 3.94037467430002*^9, 3.9403747456770267`*^9, 
+   3.9403751945381694`*^9, 3.9403752493562098`*^9, 3.940375369055565*^9, 
+   3.9403754409553604`*^9, {3.940375485985355*^9, 3.9403755071282*^9}},
+ CellLabel->
+  "Out[150]=",ExpressionUUID->"29134434-b8be-4be4-bffe-3528d4774180"]
+}, Open  ]]
+},
+WindowSize->{1024.5, 507.75},
+WindowMargins->{{-6, Automatic}, {Automatic, -6}},
+Magnification:>0.9 Inherited,
+FrontEndVersion->"13.1 para Microsoft Windows (64-bit) (August 22, 2022)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"e74d75f2-2bf6-4cb6-a3be-3d285556abc9"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 5693, 145, 592, "Input",ExpressionUUID->"3240b2d2-6177-4e5c-9cf0-70cd72c56c9b"],
+Cell[6276, 169, 3370, 95, 260, "Output",ExpressionUUID->"29134434-b8be-4be4-bffe-3528d4774180"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+
